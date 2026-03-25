@@ -24,6 +24,7 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.0.1",
+    "@street-devs/snowflake-id": "^1.0.10",
     "base62": "^2.0.2",
     "class-validator": "^0.14.4",
     "reflect-metadata": "^0.2.2",
