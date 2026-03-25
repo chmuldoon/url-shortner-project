@@ -38,10 +38,8 @@ export class UrlService {
 
     // check if url exists in shortenedUrls
     if (this.shortenedUrls.has(url)) {
-      const encodedUrl = this.shortenedUrls.get(url);
-      const shortUrl = `${BASE_URL}/${encodedUrl}`;
       return {
-        short_url: shortUrl,
+        short_url: this.shortenedUrls.get(url) as string,
       };
     }
 
@@ -64,5 +62,13 @@ export class UrlService {
     return {
       short_url: shortUrl,
     };
+  }
+
+  seedRedirectCount(shortUrl: string, count: number): void {
+    const urlData = this.urls.get(shortUrl);
+    if (urlData) {
+      urlData.redirect_count = count;
+      this.urls.set(shortUrl, urlData);
+    }
   }
 }
