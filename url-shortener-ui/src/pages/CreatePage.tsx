@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useUrls } from '../context/UrlsContext';
 import './Page.css';
-
+const BACKEND_URL = 'http://localhost:3000';
+const FRONTEND_URL = 'http://localhost:5173';
 export default function CreatePage() {
   const { shorten } = useUrls();
 
@@ -10,6 +11,11 @@ export default function CreatePage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+
+
+  const convertToFrontendUrl = (url: string) => {
+    return url.replace(BACKEND_URL, FRONTEND_URL);
+  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -57,7 +63,7 @@ export default function CreatePage() {
       {result && (
         <div className="result">
           <a href={result} target="_blank" rel="noreferrer" className="result-url">
-            {result}
+            {convertToFrontendUrl(result)}
           </a>
           <button className="btn btn-sm" onClick={handleCopy}>
             {copied ? 'Copied!' : 'Copy'}
