@@ -8,13 +8,14 @@ export default function RedirectPage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_BASE}/resolve/${shortCode}`)
+    fetch(`${API_BASE}/${shortCode}`, { redirect: 'manual' })
       .then((res) => {
-        if (!res.ok) { setNotFound(true); return null; }
-        return res.json() as Promise<{ long_url: string }>;
-      })
-      .then((data) => {
-        if (data?.long_url) window.location.href = data.long_url;
+        console.log(res.body);
+        if (res.type === 'opaqueredirect') {
+          window.location.href = `${API_BASE}/${shortCode}`;
+        } else {
+          setNotFound(true);
+        }
       })
       .catch(() => setNotFound(true));
   }, [shortCode]);
