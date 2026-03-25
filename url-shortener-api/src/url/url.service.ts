@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UrlData } from './interfaces/url-data.interface';
 import * as base62Utils from 'src/common/utils/base62.util';
 import { SnowflakeId } from '@street-devs/snowflake-id';
@@ -12,6 +12,17 @@ export class UrlService {
 
   getAllUrls(): UrlData[] {
     return Array.from(this.urls.values());
+  }
+
+  redirectToUrl(shortUrl: string): string {
+    const fullShortUrl = `${BASE_URL}/${shortUrl}`;
+    const urlData = this.urls.get(fullShortUrl);
+    if (!urlData) {
+      throw new NotFoundException('URL not found');
+    }
+    urlData.redirect_count++;
+    this.urls.set(fullShortUrl, urlData);
+    return urlData.long_url;
   }
 
   shortenUrl(url: string): UrlResponseDto {
