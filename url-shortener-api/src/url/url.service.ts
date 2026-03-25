@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UrlData } from './interfaces/url-data.interface';
 import * as base62Utils from 'src/common/utils/base62.util';
 import { SnowflakeId } from '@street-devs/snowflake-id';
 import { UrlResponseDto } from './dtos/url-response.dto';
+import { validateUrl } from 'src/common/utils/url-validator.util';
 const BASE_URL = 'http://localhost:3000';
 const snowflake = new SnowflakeId();
 @Injectable()
@@ -26,6 +31,11 @@ export class UrlService {
   }
 
   shortenUrl(url: string): UrlResponseDto {
+    // validate url
+    if (!validateUrl(url)) {
+      throw new BadRequestException('Invalid URL');
+    }
+
     // check if url exists in shortenedUrls
     if (this.shortenedUrls.has(url)) {
       const encodedUrl = this.shortenedUrls.get(url);
