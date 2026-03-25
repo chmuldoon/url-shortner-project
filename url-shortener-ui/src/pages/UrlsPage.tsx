@@ -34,7 +34,6 @@ export default function UrlsPage() {
                   </a>
                 </td>
                 <td className="truncate">{u.long_url}</td>
-                <td>{u.redirect_count}</td>
                 <td>{new Date(u.created_at).toLocaleString()}</td>
               </tr>
             ))}

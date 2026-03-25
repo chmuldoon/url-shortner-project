@@ -103,7 +103,9 @@ describe('UrlService', () => {
     });
 
     it('should throw BadRequestException for a plaintext string', () => {
-      expect(() => service.shortenUrl('not-a-url')).toThrow(BadRequestException);
+      expect(() => service.shortenUrl('not-a-url')).toThrow(
+        BadRequestException,
+      );
     });
 
     it('should throw BadRequestException with message "Invalid URL"', () => {
@@ -128,7 +130,9 @@ describe('UrlService', () => {
       service.redirectToUrl(shortCode);
       service.redirectToUrl(shortCode);
 
-      const urlData = service.getAllUrls().find((u) => u.short_url === short_url);
+      const urlData = service
+        .getAllUrls()
+        .find((u) => u.short_url === short_url);
       expect(urlData?.redirect_count).toBe(2);
     });
 
@@ -146,7 +150,9 @@ describe('UrlService', () => {
     });
 
     it('should throw NotFoundException with message "URL not found"', () => {
-      expect(() => service.redirectToUrl('unknowncode')).toThrow('URL not found');
+      expect(() => service.redirectToUrl('unknowncode')).toThrow(
+        'URL not found',
+      );
     });
   });
 });

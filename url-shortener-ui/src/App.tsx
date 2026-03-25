@@ -3,6 +3,7 @@ import { UrlsProvider } from './context/UrlsContext';
 import Header from './components/Header';
 import CreatePage from './pages/CreatePage';
 import UrlsPage from './pages/UrlsPage';
+import RedirectPage from './pages/RedirectPage';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<Navigate to="/create" replace />} />
             <Route path="/create" element={<CreatePage />} />
             <Route path="/urls" element={<UrlsPage />} />
+            <Route path="/:shortCode" element={<RedirectPage />} />
           </Routes>
         </main>
       </UrlsProvider>

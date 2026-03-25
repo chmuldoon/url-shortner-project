@@ -43,8 +43,10 @@ describe('UrlController', () => {
 
       controller.shortenUrl(dto);
 
-      expect(urlService.shortenUrl).toHaveBeenCalledTimes(1);
-      expect(urlService.shortenUrl).toHaveBeenCalledWith('https://example.com');
+      expect(mockUrlService.shortenUrl).toHaveBeenCalledTimes(1);
+      expect(mockUrlService.shortenUrl).toHaveBeenCalledWith(
+        'https://example.com',
+      );
     });
 
     it('should return the short_url object from the service', () => {
@@ -74,7 +76,7 @@ describe('UrlController', () => {
 
       controller.getAllUrls();
 
-      expect(urlService.getAllUrls).toHaveBeenCalledTimes(1);
+      expect(mockUrlService.getAllUrls).toHaveBeenCalledTimes(1);
     });
 
     it('should return an empty array when no URLs exist', () => {
@@ -117,8 +119,8 @@ describe('UrlController', () => {
 
       controller.redirectToUrl('abc123');
 
-      expect(urlService.redirectToUrl).toHaveBeenCalledTimes(1);
-      expect(urlService.redirectToUrl).toHaveBeenCalledWith('abc123');
+      expect(mockUrlService.redirectToUrl).toHaveBeenCalledTimes(1);
+      expect(mockUrlService.redirectToUrl).toHaveBeenCalledWith('abc123');
     });
 
     it('should return an object with the resolved url and statusCode 302', () => {
