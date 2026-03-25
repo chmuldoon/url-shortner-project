@@ -1,8 +1,14 @@
 import { useUrls } from '../context/UrlsContext';
 import './Page.css';
 
+const BACKEND_URL = 'http://localhost:3000';
+const FRONTEND_URL = 'http://localhost:5173';
 export default function UrlsPage() {
   const { urls, loading, error } = useUrls();
+
+  const convertToFrontendUrl = (url: string) => {
+    return url.replace(BACKEND_URL, FRONTEND_URL);
+  };
 
   return (
     <div className="page">
@@ -21,7 +27,6 @@ export default function UrlsPage() {
             <tr>
               <th>Short URL</th>
               <th>Original URL</th>
-              <th>Redirects</th>
               <th>Created</th>
             </tr>
           </thead>
@@ -30,7 +35,7 @@ export default function UrlsPage() {
               <tr key={u.id}>
                 <td>
                   <a href={u.short_url} target="_blank" rel="noreferrer">
-                    {u.short_url}
+                    {convertToFrontendUrl(u.short_url)}
                   </a>
                 </td>
                 <td className="truncate">{u.long_url}</td>
