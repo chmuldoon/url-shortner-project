@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useUrls } from '../context/UrlsContext';
 import './Page.css';
 
-const API_BASE = 'http://localhost:3000';
-
 export default function CreatePage() {
+  const { shorten } = useUrls();
+
   const [url, setUrl] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -17,19 +18,8 @@ export default function CreatePage() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/shorten`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-      });
-
-      if (!res.ok) {
-        const data = (await res.json()) as { message?: string };
-        throw new Error(data.message ?? 'Something went wrong');
-      }
-
-      const data = (await res.json()) as { short_url: string };
-      setResult(data.short_url);
+      const shortUrl = await shorten(url);
+      setResult(shortUrl);
       setUrl('');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');

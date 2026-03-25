@@ -1,33 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useUrls } from '../context/UrlsContext';
 import './Page.css';
 
-const API_BASE = 'http://localhost:3000';
-
-interface UrlData {
-  id: string;
-  short_url: string;
-  long_url: string;
-  created_at: string;
-  redirect_count: number;
-}
-
 export default function UrlsPage() {
-  const [urls, setUrls] = useState<UrlData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(`${API_BASE}/urls`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load URLs');
-        return res.json() as Promise<UrlData[]>;
-      })
-      .then(setUrls)
-      .catch((err: unknown) => {
-        setError(err instanceof Error ? err.message : 'Something went wrong');
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const { urls, loading, error } = useUrls();
 
   return (
     <div className="page">
