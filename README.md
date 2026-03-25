@@ -13,7 +13,6 @@ Both the API and UI must be running at the same time.
 ```bash
 cd url-shortener-api
 npm install
-npm run start:dev        # watch mode
 # or
 npm run start            # single run
 # or
@@ -47,3 +46,13 @@ npm run test        # unit tests
 2. Clicking a short URL loads a **Redirecting…** page on the frontend, which calls `GET /resolve/:shortCode` on the API.
 3. The API increments the redirect count and returns the long URL; the browser navigates there directly.
 4. Invalid short codes show a **404** page with a link back to Create.
+
+## Assumptions
+
+1. For brevity sake, the short url when appeneded to the frontend's base url simply checks the backend for redirects then redirects the user to that url if it exists, in production, these services could share the same base url
+2. Opted to use Snowflake ID for best possibly scaling with base62 encoding
+3. Kept strict frontend validation for links so save time, however would Ideally allow for inputs to not include https:// for simpler user experience
+
+## Additions
+
+-I wanted to include redirect counts, however I did not have enough time to fully implement, I would say it is about 90% finished. Did not have enough time to ensure that the redirect count increment works correctly with frontend url redirection
