@@ -26,9 +26,12 @@ export class UrlService {
 
     // generate short id
     const id = snowflake.generate();
+    // encode id to base62 and add it to the base url
     const shortId = base62Utils.encode(id);
     const shortUrl = `${BASE_URL}/${shortId}`;
+    // set the short url in the shortenedUrls map
     this.shortenedUrls.set(url, shortUrl);
+    // set the url data in the urls map
     this.urls.set(shortUrl, {
       id: id,
       short_url: shortUrl,
