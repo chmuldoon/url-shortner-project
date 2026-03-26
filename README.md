@@ -40,11 +40,23 @@ npm run test        # unit tests
 
 ---
 
+##Pages
+###/create
+Page used for the creation of shortened urls.
+
+###/urls
+Page used to list shortened URLs and their full URLs, planned to include redirect metrics as well.
+
+###/:shortUrlSlug
+Redirect Page, utilizes shortened slug to to query backend redirect.
+
+---
+
 ## How It Works
 
 1. Paste a long URL on the **Create** page — the API returns a short URL pointing at `localhost:5173`.
-2. Clicking a short URL loads a **Redirecting…** page on the frontend, which calls `GET /resolve/:shortCode` on the API.
-3. The API increments the redirect count and returns the long URL; the browser navigates there directly.
+2. Clicking a short URL loads a **Redirecting…** page on the frontend, which calls `GET /:shortCode` on the API.
+3. All Short URLs can be viewed from the **URLs** page.
 4. Invalid short codes show a **404** page with a link back to Create.
 
 ## Assumptions
